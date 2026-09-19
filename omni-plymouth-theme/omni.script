@@ -1,0 +1,58 @@
+# Omni Console - theme plymouth
+# Fond fixe + eclairs qui apparaissent/disparaissent aleatoirement
+
+# Fond, adapte a l'ecran
+bg = Image("fond.png");
+screen_w = Window.GetWidth();
+screen_h = Window.GetHeight();
+img_w = bg.GetWidth();
+img_h = bg.GetHeight();
+# mise a l'echelle pour couvrir l'ecran en gardant les proportions
+scale_x = screen_w / img_w;
+scale_y = screen_h / img_h;
+scale = scale_x;
+if (scale_y > scale) scale = scale_y;
+bg_scaled = bg.Scale(img_w * scale, img_h * scale);
+bg_sprite = Sprite(bg_scaled);
+bg_sprite.SetX((screen_w - img_w * scale) / 2);
+bg_sprite.SetY((screen_h - img_h * scale) / 2);
+bg_sprite.SetZ(0);
+
+# Eclairs (a la meme echelle et position que le fond)
+ec = Image("eclair_c.png").Scale(img_w * scale, img_h * scale);
+eg = Image("eclair_g.png").Scale(img_w * scale, img_h * scale);
+off_x = (screen_w - img_w * scale) / 2;
+off_y = (screen_h - img_h * scale) / 2;
+
+sprite_ec = Sprite();
+sprite_ec.SetImage(ec);
+sprite_ec.SetX(off_x); sprite_ec.SetY(off_y); sprite_ec.SetZ(10);
+sprite_ec.SetOpacity(0);
+
+sprite_eg = Sprite();
+sprite_eg.SetImage(eg);
+sprite_eg.SetX(off_x); sprite_eg.SetY(off_y); sprite_eg.SetZ(9);
+sprite_eg.SetOpacity(0);
+
+# Compteur pour un clignotement pseudo-aleatoire
+tick = 0;
+fun refresh() {
+    tick++;
+    # eclair central : flashs courts irreguliers
+    m = Math.Int(tick) % 47;
+    if (m == 3 || m == 4 || m == 19 || m == 31 || m == 32) {
+        sprite_ec.SetOpacity(1);
+    } else {
+        if (m == 5 || m == 20 || m == 33) sprite_ec.SetOpacity(0.4);
+        else sprite_ec.SetOpacity(0);
+    }
+    # eclairs de fond : autre rythme
+    n = Math.Int(tick) % 61;
+    if (n == 11 || n == 12 || n == 40) {
+        sprite_eg.SetOpacity(1);
+    } else {
+        if (n == 13 || n == 41) sprite_eg.SetOpacity(0.35);
+        else sprite_eg.SetOpacity(0);
+    }
+}
+Plymouth.SetRefreshFunction(refresh);

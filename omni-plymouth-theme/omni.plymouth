@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Omni Console
+Description=Ecran de demarrage Omni Console
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/omni
+ScriptFile=/usr/share/plymouth/themes/omni/omni.script
