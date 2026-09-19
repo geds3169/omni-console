@@ -73,6 +73,7 @@ readonly OMNI_CORE_PKGS=(
   parted dosfstools e2fsprogs grub-efi-amd64 grub-pc-bin util-linux
   pulseaudio-utils
   pipewire pipewire-pulse wireplumber
+  python3-pil python3-pil.imagetk network-manager
 )
 
 # ============================================================================
@@ -676,6 +677,13 @@ step_apply_settings() {
        }
 
     chmod +x "${CHROOT_DIR}/usr/local/bin/omni-installer"
+    # Interface Omni (console post-installation)
+    mkdir -p "${CHROOT_DIR}/usr/local/share/omni/ui/cartes"
+    if [ -f /home/geds/mon-projet/omni-console.py ]; then
+        cp /home/geds/mon-projet/omni-console.py "${CHROOT_DIR}/usr/local/share/omni/ui/"
+        cp /home/geds/mon-projet/cartes/*.jpg "${CHROOT_DIR}/usr/local/share/omni/ui/cartes/" 2>/dev/null
+        log_ok "Interface Omni copiee."
+    fi
     # Musique d'installation
     mkdir -p "${CHROOT_DIR}/usr/local/share/omni"
     for f in "${PROJECT_ROOT}"/*.mp3 "${PROJECT_ROOT}"/*.ogg; do

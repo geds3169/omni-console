@@ -920,10 +920,7 @@ menuentry "Omni Console" {{
         os.makedirs(cible+"/home/omni/.config/openbox", exist_ok=True)
         with open(cible+"/home/omni/.config/openbox/autostart","w") as f:
             f.write("xsetroot -solid '#0d0221' &\n")
-            f.write("xterm -fullscreen -bg '#0d0221' -fg '#ff2e97' -fa Monospace -fs 20 "
-                    "-e \"echo; echo '   OMNI CONSOLE'; echo; "
-                    "echo '   Systeme installe et demarre.'; "
-                    "echo '   Interface joueurs a venir.'; echo; bash\" &\n")
+            f.write("cd /usr/local/share/omni/ui && python3 /usr/local/share/omni/ui/omni-console.py &\n")
         session = "#!/bin/sh\nexec openbox-session\n"
         with open(cible+"/home/omni/.xsession","w") as f:
             f.write(session)
