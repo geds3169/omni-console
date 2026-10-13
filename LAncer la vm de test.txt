@@ -1,0 +1,4 @@
+./omni-atelier.sh etat
+./omni-atelier.sh build seulement si les fichiers ont changé
+./omni-atelier.sh nouveau
+./omni-atelier.sh lancer
